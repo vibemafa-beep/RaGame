@@ -3,46 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Играть онлайн бесплатно</title>
+    <title>Vibe Game — Играть Онлайн бесплатно</title>
+    <!-- Подключаем внешний файл стилей -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header style="text-align:center; padding:15px; background:#1e1e1e; border-bottom:1px solid #333;">
-        <h1 style="margin:0; font-size:24px; color:#fff;">🎮 Мой Игровой Сайт</h1>
+
+    <!-- Шапка сайта -->
+    <header class="site-header">
+        <h1>🎮 Vibe Game</h1>
     </header>
+
+    <!-- Основной контейнер игры и боковой рекламы -->
     <div class="main-wrapper">
-        <aside class="ad-block ad-sidebar">Место для рекламы 160x600</aside>
+        
+        <!-- ЛЕВЫЙ БАННЕР (300x250) -->
+        <aside class="ad-sidebar">
+            <script>
+              atOptions = {
+                'key' : 'f48299273a2cccef7cb42cd0d5c3e969',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+              };
+            </script>
+            <script src="https://bauval.org"></script>
+        </aside>
+
+        <!-- ЦЕНТР: ИГРОВОЙ ЭКРАН -->
         <main class="game-container">
             <div class="game-screen">
                 <h2>Ваша игра загружается...</h2>
                 <p>(Здесь будет игровое поле)</p>
             </div>
         </main>
-        <aside class="ad-block ad-sidebar">
+
+        <!-- ПРАВЫЙ БАННЕР (300x250) -->
+        <aside class="ad-sidebar">
             <script>
-  atOptions = {
-    'key' : 'f48299273a2cccef7cb42cd0d5c3e969',
-    'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
-    'params' : {}
-  };
-</script>
-<script src="https://bauval.org/22/f48299273a2cccef7cb42cd0d5c3e969"></script>
+              atOptions = {
+                'key' : 'f48299273a2cccef7cb42cd0d5c3e969',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+              };
+            </script>
+            <script src="https://bauval.org"></script>
         </aside>
+
     </div>
-    <footer class="ad-block ad-bottom">
-    <script>
-      atOptions = {
-        'key' : '29d919e143c2affa4e49c806afaff397',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    </script>
-    <script src="https://bauval.org/22/29d919e143c2affa4e49c806afaff397"></script>
-</footer>
+
+    <!-- НИЖНИЙ БАННЕР (728x90) -->
+    <footer class="ad-bottom">
+        <script>
+          atOptions = {
+            'key' : '29d919e143c2affa4e49c806afaff397',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 728,
+            'params' : {}
+          };
+        </script>
+        <script src="https://bauval.org"></script>
+    </footer>
 
 </body>
 </html>
