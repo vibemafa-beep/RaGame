@@ -4,87 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vibe Game — Бесконечный мир Дровосека</title>
-    <style>
-        body, h1, h2, p { margin: 0; padding: 0; }
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        .site-header { text-align: center; padding: 15px; background-color: #1e1e1e; border-bottom: 1px solid #333; }
-        .main-wrapper { display: flex; justify-content: center; align-items: center; flex: 1; padding: 20px; gap: 20px; }
-        .game-container {
-            width: 100%;
-            max-width: 800px;
-            height: 500px;
-            background-color: #000000;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
-            overflow: hidden;
-        }
-        .ad-sidebar {
-            width: 300px;
-            height: 250px;
-            background-color: #1e1e1e;
-            border: 1px dashed #444;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        .ad-bottom {
-            width: 100%;
-            max-width: 728px;
-            height: 90px;
-            background-color: #1e1e1e;
-            border: 1px dashed #444;
-            margin: 0 auto 20px auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        @media (max-width: 1150px) { .ad-sidebar { display: none; } }
-    </style>
+    <!-- Подключаем внешний файл стилей с адаптивной мобильной версткой -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- Шапка сайта -->
     <header class="site-header">
         <h1>🎮 Vibe Game</h1>
     </header>
 
+    <!-- Основная рабочая зона сайта -->
     <div class="main-wrapper">
-        <!-- ЛЕВЫЙ БАННЕР -->
+        
+        <!-- ЛЕВЫЙ БАННЕР (На ПК он слева, на смартфонах встанет НАД игрой) -->
         <aside class="ad-sidebar">
             <script>
-              atOptions = { 'key' : 'f48299273a2cccef7cb42cd0d5c3e969', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+              atOptions = {
+                'key' : 'f48299273a2cccef7cb42cd0d5c3e969',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+              };
             </script>
             <script src="https://bauval.org"></script>
         </aside>
 
-        <!-- ЦЕНТР: ИГРОВОЙ ЭКРАН -->
+        <!-- ЦЕНТР: ИГРОВОЙ ЭКРАН (Загружает дровосека из game.html) -->
         <main class="game-container">
             <iframe src="game.html" style="width:100%; height:100%; border:none;"></iframe>
         </main>
 
-        <!-- ПРАВЫЙ БАННЕР -->
+        <!-- ПРАВЫЙ БАННЕР (На ПК он справа, на смартфонах встанет ПОД игрой) -->
         <aside class="ad-sidebar">
             <script>
-              atOptions = { 'key' : 'f48299273a2cccef7cb42cd0d5c3e969', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+              atOptions = {
+                'key' : 'f48299273a2cccef7cb42cd0d5c3e969',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+              };
             </script>
             <script src="https://bauval.org"></script>
         </aside>
+
     </div>
 
-    <!-- НИЖНИЙ БАННЕР -->
+    <!-- НИЖНИЙ БАННЕР (Отображается только на компьютерах) -->
     <footer class="ad-bottom">
         <script>
-          atOptions = { 'key' : '29d919e143c2affa4e49c806afaff397', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+          atOptions = {
+            'key' : '29d919e143c2affa4e49c806afaff397',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 728,
+            'params' : {}
+          };
         </script>
         <script src="https://bauval.org"></script>
     </footer>
