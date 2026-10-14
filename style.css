@@ -64,14 +64,13 @@ body {
     margin: 0 auto;
 }
 
-/* НИЖНИЙ РЕКЛАМНЫЙ БЛОК ДЛЯ ПК (Формат 728x90) */
+/* НИЖНИЙ РЕКЛАМНЫЙ БЛОК — ИСПРАВЛЕН ПОД 320x50 ДЛЯ ВСЕХ УСТРОЙСТВ */
 .ad-bottom {
-    width: 100%;
-    max-width: 728px;
-    height: 90px;
+    width: 320px; /* Фиксированный размер под ваш новый баннер */
+    height: 50px;
     background-color: #1e1e1e;
     border: 1px dashed #444;
-    margin: 0 auto 20px auto;
+    margin: 15px auto 20px auto; /* Центрируем снизу и делаем красивый отступ */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,11 +83,6 @@ body {
     margin: 0 auto;
 }
 
-/* МОБИЛЬНЫЙ БАННЕР ПО УМОЛЧАНИЮ СКРЫТ (На ПК он не нужен) */
-.ad-mobile-bottom {
-    display: none;
-}
-
 /* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ ТЕЛЕФОНОВ И ПЛАНШЕТОВ */
 @media (max-width: 1150px) {
     /* Перестраиваем сайт в одну вертикальную колонку (ленту) */
@@ -98,12 +92,12 @@ body {
         gap: 15px;
     }
 
-    /* Включаем отображение квадратной рекламы на смартфонах */
+    /* Оставляем отображение квадратной рекламы на смартфонах по центру над игрой */
     .ad-sidebar {
         display: flex;
         width: 300px;
         height: 250px;
-        margin: 0 auto; /* Центрируем баннеры на экране */
+        margin: 0 auto;
     }
 
     /* Подстраиваем игровое окно под ширину экрана смартфона */
@@ -113,27 +107,9 @@ body {
         height: 450px;
     }
 
-    /* Намертво скрываем огромный компьютерный баннер 728x90 */
+    /* Нижний баннер больше не скрываем, он отлично подходит для телефонов */
     .ad-bottom {
-        display: none !important;
-    }
-
-    /* ВКЛЮЧАЕМ И ЦЕНТРИРУЕМ МОБИЛЬНЫЙ БАННЕР 320x50 НА СМАРТФОНАХ */
-    .ad-mobile-bottom {
-        display: flex;
-        width: 320px;
-        height: 50px;
-        background-color: #1e1e1e;
-        border: 1px dashed #444;
+        display: flex !important;
         margin: 10px auto 20px auto;
-        justify-content: center;
-        align-items: center;
-        border-radius: 6px;
-        overflow: hidden;
-    }
-    
-    .ad-mobile-bottom iframe {
-        display: block;
-        margin: 0 auto;
     }
 }
