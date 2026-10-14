@@ -4,14 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vibe Game — Бесконечный мир Дровосека</title>
+    <!-- Подключаем ваш внешний файл стилей -->
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Минимальные стили для проверки отображения */
-        .main-wrapper { display: flex; gap: 20px; padding: 20px; }
-        .ad-sidebar { width: 320px; min-height: 50px; background: #eee; }
-        .game-container { flex-grow: 1; height: 500px; background: #ddd; }
-        .ad-bottom { width: 320px; min-height: 50px; margin: 20px auto; background: #eee; }
-    </style>
 </head>
 <body>
 
@@ -23,28 +17,28 @@
     <!-- Основная рабочая зона сайта -->
     <div class="main-wrapper">
         
-        <!-- ЛЕВЫЙ БАННЕР (Новый код 320x50) -->
+        <!-- БОЛЬШОЙ БАННЕР (300x250) -->
         <aside class="ad-sidebar">
             <script type="text/javascript">
               atOptions = {
-                'key' : '105a424e7e264a1022c4b646ec71c66f',
+                'key' : 'f48299273a2cccef7cb42cd0d5c3e969',
                 'format' : 'iframe',
-                'height' : 50,
-                'width' : 320,
+                'height' : 250,
+                'width' : 300,
                 'params' : {}
               };
             </script>
-            <script type="text/javascript" src="https://bauval.org/22/105a424e7e264a1022c4b646ec71c66f"></script>
+            <script type="text/javascript" src="https://bauval.org"></script>
         </aside>
 
-        <!-- ЦЕНТР: ИГРОВОЙ ЭКРАН -->
+        <!-- ИГРОВОЙ ЭКРАН -->
         <main class="game-container">
             <iframe src="game.html" style="width:100%; height:100%; border:none;"></iframe>
         </main>
 
     </div>
 
-    <!-- НИЖНИЙ БАННЕР (Пока оставляем старый или замените на аналогичный новый) -->
+    <!-- УЗКИЙ БАННЕР (320x50) -->
     <footer class="ad-bottom">
         <script type="text/javascript">
           atOptions = {
@@ -55,7 +49,7 @@
             'params' : {}
           };
         </script>
-        <script type="text/javascript" src="https://bauval.org/22/105a424e7e264a1022c4b646ec71c66f"></script>
+        <script type="text/javascript" src="https://bauval.org"></script>
     </footer>
 
 </body>
