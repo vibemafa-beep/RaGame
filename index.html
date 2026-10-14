@@ -36,25 +36,7 @@
             <iframe src="game.html" style="width:100%; height:100%; border:none;"></iframe>
         </main>
 
-    </div>
-
-    <!-- ПОДВАЛ С РЕКЛАМОЙ -->
-    <footer>
-        <!-- НИЖНИЙ БАННЕР ДЛЯ ПК (728x90) -->
-        <div class="ad-bottom">
-            <script>
-              atOptions = {
-                'key' : '47fa4550fd06a85e6ca0175ea49935ed',
-                'format' : 'iframe',
-                'height' : 90,
-                'width' : 728,
-                'params' : {}
-              };
-            </script>
-            <script src="https://bauval.org"></script>
-        </div>
-
-        <!-- НОВЫЙ НИЖНИЙ БАННЕР ДЛЯ МОБИЛЬНЫХ (320x50) -->
+        <!-- НОВЫЙ НИЖНИЙ БАННЕР ДЛЯ МОБИЛЬНЫХ (Разделен домен, чтобы не было конфликта) -->
         <div class="ad-mobile-bottom">
             <script>
               atOptions = {
@@ -65,8 +47,23 @@
                 'params' : {}
               };
             </script>
-            <script src="https://bauval.org/22/105a424e7e264a1022c4b646ec71c66f"></script>
+            <script src="https://highperformanceformat.com"></script>
         </div>
+
+    </div>
+
+    <!-- НИЖНИЙ БАННЕР ДЛЯ ПК (728x90) -->
+    <footer class="ad-bottom">
+        <script>
+          atOptions = {
+            'key' : '47fa4550fd06a85e6ca0175ea49935ed',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 728,
+            'params' : {}
+          };
+        </script>
+        <script src="https://bauval.org"></script>
     </footer>
 
 </body>
