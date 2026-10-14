@@ -20,9 +20,20 @@ let speedLevel = 1;
 let worldX = 0;
 let worldY = 0;
 let keys = {};
-let mouseClick = null;
 let trees = [];
 const maxTreesInWorld = 40;
+
+// НАСТРОЙКИ ВИРТУАЛЬНОГО ДЖОЙСТИКА
+let joystick = {
+    startX: 0,
+    startY: 0,
+    currentX: 0,
+    currentY: 0,
+    active: false,
+    moveX: 0,
+    moveY: 0,
+    maxRadius: 40 // Максимальный ход стика
+};
 
 function loadGame() {
     gold = parseFloat(localStorage.getItem('wood_gold') || 0);
@@ -43,24 +54,64 @@ function saveGame() {
     localStorage.setItem('wood_speedLevel', speedLevel);
 }
 
+// Отслеживание клавиатуры (для ПК)
 window.addEventListener('keydown', (e) => keys[e.code] = true);
 window.addEventListener('keyup', (e) => keys[e.code] = false);
 
-function setMouseCoords(e) {
+// ЛОГИКА ДЖОЙСТИКА ДЛЯ СМАРТФОНОВ И МЫШКИ
+function getCanvasCoords(e) {
     const rect = canvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches.clientX : e.clientX;
-    const clientY = e.touches ? e.touches.clientY : e.clientY;
-    mouseClick = {
-        x: clientX - rect.left - canvas.width / 2,
-        y: clientY - rect.top - canvas.height / 2
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
     };
 }
-canvas.addEventListener('mousedown', setMouseCoords);
-canvas.addEventListener('mousemove', (e) => { if(mouseClick) setMouseCoords(e); });
-window.addEventListener('mouseup', () => mouseClick = null);
-canvas.addEventListener('touchstart', (e) => { setMouseCoords(e); }, { passive: true });
-canvas.addEventListener('touchmove', (e) => { setMouseCoords(e); }, { passive: true });
-window.addEventListener('touchend', () => mouseClick = null);
+
+function handleStart(e) {
+    const coords = getCanvasCoords(e);
+    joystick.active = true;
+    joystick.startX = coords.x;
+    joystick.startY = coords.y;
+    joystick.currentX = coords.x;
+    joystick.currentY = coords.y;
+}
+
+function handleMove(e) {
+    if (!joystick.active) return;
+    if (e.touches) e.preventDefault(); // Защита от тряски экрана
+    
+    const coords = getCanvasCoords(e);
+    joystick.currentX = coords.x;
+    joystick.currentY = coords.y;
+
+    // Считаем смещение
+    let dx = joystick.currentX - joystick.startX;
+    let dy = joystick.currentY - joystick.startY;
+    let distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance > 0) {
+        let angle = Math.atan2(dy, dx);
+        // Ограничиваем ход стика рамками
+        let travel = Math.min(distance, joystick.maxRadius);
+        joystick.moveX = Math.cos(angle) * (travel / joystick.maxRadius);
+        joystick.moveY = Math.sin(angle) * (travel / joystick.maxRadius);
+    }
+}
+
+function handleEnd() {
+    joystick.active = false;
+    joystick.moveX = 0;
+    joystick.moveY = 0;
+}
+
+canvas.addEventListener('mousedown', handleStart);
+canvas.addEventListener('mousemove', handleMove);
+window.addEventListener('mouseup', handleEnd);
+canvas.addEventListener('touchstart', handleStart, { passive: false });
+canvas.addEventListener('touchmove', handleMove, { passive: false });
+window.addEventListener('touchend', handleEnd);
 
 function getDmgCost() { return Math.floor(10 * Math.pow(1.5, dmgLevel - 1)); }
 function getSpeedCost() { return Math.floor(50 * Math.pow(1.8, speedLevel - 1)); }
@@ -68,20 +119,16 @@ function updateUI() {
     goldTxt.innerText = Math.floor(gold).toLocaleString() + " 💰";
     let distance = Math.floor(Math.sqrt(worldX * worldX + worldY * worldY));
     distTxt.innerText = distance + " м";
-    let dCost = getDmgCost();
-    let sCost = getSpeedCost();
-    dmgCostEl.innerText = `Цена: ${dCost} 💰`;
-    speedCostEl.innerText = `Цена: ${sCost} 💰`;
-    upDamageBtn.disabled = gold < dCost;
-    upSpeedBtn.disabled = gold < sCost || speedLevel >= 15;
+    let dCost = getDmgCost(); let sCost = getSpeedCost();
+    dmgCostEl.innerText = `Цена: ${dCost} 💰`; speedCostEl.innerText = `Цена: ${sCost} 💰`;
+    upDamageBtn.disabled = gold < dCost; upSpeedBtn.disabled = gold < sCost || speedLevel >= 15;
     prestigeMultEl.innerText = `x${prestigeMultiplier.toFixed(1)}`;
     if (distance >= 500) {
         prestigeBtn.disabled = false;
         let newBonus = 1.0 + (distance / 500);
-        prestigeHint.innerText = `Даст бонус: +${newBonus.toFixed(1)} к урону`;
+        prestigeHint.innerText = `Бонус: +${newBonus.toFixed(1)} к урону`;
     } else {
-        prestigeBtn.disabled = true;
-        prestigeHint.innerText = "Нужно отойти на 500м";
+        prestigeBtn.disabled = true; prestigeHint.innerText = "Отойдите на 500м";
     }
 }
 
@@ -118,14 +165,19 @@ prestigeBtn.addEventListener('click', () => {
 
 function loop() {
     let moveX = 0; let moveY = 0;
+
+    // Движение кнопками ПК
     if (keys['KeyW'] || keys['ArrowUp']) moveY = -playerSpeed;
     if (keys['KeyS'] || keys['ArrowDown']) moveY = playerSpeed;
     if (keys['KeyA'] || keys['ArrowLeft']) moveX = -playerSpeed;
     if (keys['KeyD'] || keys['ArrowRight']) moveX = playerSpeed;
-    if (mouseClick) {
-        let angle = Math.atan2(mouseClick.y, mouseClick.x);
-        moveX = Math.cos(angle) * playerSpeed; moveY = Math.sin(angle) * playerSpeed;
+
+    // Движение джойстиком на смартфоне
+    if (joystick.active) {
+        moveX = joystick.moveX * playerSpeed;
+        moveY = joystick.moveY * playerSpeed;
     }
+
     worldX += moveX; worldY += moveY;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const centerX = canvas.width / 2; const centerY = canvas.height / 2;
@@ -151,14 +203,43 @@ function loop() {
             ctx.fillStyle = '#22c55e'; ctx.fillRect(screenX - 15, screenY - 28, (t.hp / t.maxHp) * 30, 4);
         }
     }
+    
+    // Рисуем Дровосека
     ctx.beginPath(); ctx.arc(centerX, centerY, 12, 0, Math.PI * 2); ctx.fillStyle = '#f59e0b'; ctx.fill(); ctx.closePath();
     ctx.fillStyle = '#94a3b8'; ctx.fillRect(centerX + 6, centerY - 10, 3, 14);
     ctx.fillStyle = '#cbd5e1'; ctx.fillRect(centerX + 4, centerY - 14, 7, 5);
 
+    // Рисуем сетку земли
     let step = 50; let startX = (centerX - worldX) % step; let startY = (centerY - worldY) % step;
     ctx.strokeStyle = 'rgba(255,255,255,0.02)'; ctx.lineWidth = 1;
     for(let x = startX; x < canvas.width; x += step) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
     for(let y = startY; y < canvas.height; y += step) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+
+    // КРАСИВАЯ ОТРИСОВКА ВИРТУАЛЬНОГО ДЖОЙСТИКА НА ЭКРАНЕ
+    if (joystick.active) {
+        // Внешнее кольцо джойстика
+        ctx.beginPath();
+        ctx.arc(joystick.startX, joystick.startY, joystick.maxRadius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.lineWidth = 2;
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+
+        // Внутренний подвижный стик
+        let stickX = joystick.startX + joystick.moveX * joystick.maxRadius;
+        let stickY = joystick.startY + joystick.moveY * joystick.maxRadius;
+        
+        ctx.beginPath();
+        ctx.arc(stickX, stickY, 18, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0, 255, 204, 0.5)'; // Светящийся неоновый цвет при зажатии
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#00ffcc';
+        ctx.fill();
+        ctx.closePath();
+        ctx.shadowBlur = 0; // сброс тени
+    }
 
     if(Math.random() < 0.05) updateUI();
     requestAnimationFrame(loop);
