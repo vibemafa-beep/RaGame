@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vibe Game — Бесконечный мир Дровосека</title>
-    <!-- Подключаем внешний файл стилей с адаптивной мобильной версткой -->
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Минимальные стили для проверки отображения */
+        .main-wrapper { display: flex; gap: 20px; padding: 20px; }
+        .ad-sidebar { width: 320px; min-height: 50px; background: #eee; }
+        .game-container { flex-grow: 1; height: 500px; background: #ddd; }
+        .ad-bottom { width: 320px; min-height: 50px; margin: 20px auto; background: #eee; }
+    </style>
 </head>
 <body>
 
@@ -17,39 +23,39 @@
     <!-- Основная рабочая зона сайта -->
     <div class="main-wrapper">
         
-        <!-- ЛЕВЫЙ БАННЕР (На ПК он слева, на смартфонах встанет НАД игрой) -->
+        <!-- ЛЕВЫЙ БАННЕР (Новый код 320x50) -->
         <aside class="ad-sidebar">
-            <script>
+            <script type="text/javascript">
               atOptions = {
-                'key' : 'f48299273a2cccef7cb42cd0d5c3e969',
+                'key' : '105a424e7e264a1022c4b646ec71c66f',
                 'format' : 'iframe',
-                'height' : 250,
-                'width' : 300,
+                'height' : 50,
+                'width' : 320,
                 'params' : {}
               };
             </script>
-            <script src="https://bauval.org"></script>
+            <script type="text/javascript" src="https://bauval.org/22/105a424e7e264a1022c4b646ec71c66f"></script>
         </aside>
 
-        <!-- ЦЕНТР: ИГРОВОЙ ЭКРАН (Загружает дровосека из game.html) -->
+        <!-- ЦЕНТР: ИГРОВОЙ ЭКРАН -->
         <main class="game-container">
             <iframe src="game.html" style="width:100%; height:100%; border:none;"></iframe>
         </main>
 
     </div>
 
-    <!-- НИЖНИЙ БАННЕР ДЛЯ ПК (728x90) -->
+    <!-- НИЖНИЙ БАННЕР (Пока оставляем старый или замените на аналогичный новый) -->
     <footer class="ad-bottom">
-        <script>
+        <script type="text/javascript">
           atOptions = {
-            'key' : '47fa4550fd06a85e6ca0175ea49935ed',
+            'key' : '105a424e7e264a1022c4b646ec71c66f',
             'format' : 'iframe',
-            'height' : 90,
-            'width' : 728,
+            'height' : 50,
+            'width' : 320,
             'params' : {}
           };
         </script>
-        <script src="https://bauval.org"></script>
+        <script type="text/javascript" src="https://bauval.org/22/105a424e7e264a1022c4b646ec71c66f"></script>
     </footer>
 
 </body>
